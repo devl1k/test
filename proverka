@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кнопка и вкладки</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .button-container {
+            display: flex;
+            align-items: center;
+            user-select: none; /* предотвращаем выделение текста */
+        }
+
+        .button {
+            background-color: white;
+            color: black;
+            border: 2px solid gray;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .button:hover {
+            background-color: #ccc;
+        }
+
+        .button:active {
+            transform: scale(0.95);
+        }
+
+        .tabs-container {
+            position: absolute;
+            left: -200px;
+            width: 200px;
+            background-color: #333;
+            color: white;
+            height: 100%;
+            transition: left 0.3s;
+            overflow: hidden;
+        }
+
+        .tabs {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .tab {
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, width 0.2s;
+        }
+
+        .tab:hover {
+            background-color: #444;
+        }
+
+        .tab:active {
+            transform: scale(0.95);
+        }
+
+        .tabs-container.active {
+            left: 0;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            animation: fadeIn 0.5s;
+            text-align: left; /* выравнивание текста слева */
+            position: absolute; /* позиционирование содержимого влкдаки */
+            top: 5%; /* отступ сверху */
+            left: 15%; /* отступ слева */
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .start-button {
+            display: block;
+        }
+
+        .return-button {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <div class="button start-button" onclick="toggleTabs()">Нажми</div>
+        <div class="tabs-container">
+            <ul class="tabs">
+                <li class="tab" onclick="toggleTab('info')">Информация</li>
+                <li class="tab" onclick="toggleTab('links')">Ссылки</li>
+                <li class="tab" onclick="toggleTab('return')">Вернуть</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="tab-content" id="info">
+        Содержимое вкладки 
+        <p>"Информация"</p>
+        <p>Всякая информация, много писанины, налито воды и ненужное гавно<p>
+        <p>ещё больше текста без смысла, много налитой воды, много букв, слов<p>
+        <p>Немного всякого говна, и много, если тут слишком много<p>
+        <p>Всё для массива. Он тут чтобы было видно, что тут много текста.
+    </div>
+    <div class="tab-content" id="links">
+        А тут типа всякие ссылки 
+        <p>Ссылка на ютуб: https://www.youtube.com<p>
+        <p>Ссылка на вк: https://vk.com<p>
+        <p>ССылка на иди нахуй: https://idi_nahui<p>
+        <p>Ссылка на не иди нахуй https://ne_idi_nahui<p>
+    </div>
+    <div class="tab-content" id="return">
+         
+        <p> </p>
+    </div>
+
+    <div class="button return-button" onclick="hideTabs()">Убрать</div>
+
+    <script>
+        let tabsContainer = document.querySelector('.tabs-container');
+        let currentTab = null;
+
+        function toggleTabs() {
+            tabsContainer.classList.toggle('active');
+            document.querySelector('.start-button').style.display = 'none';
+            if (currentTab !== null) {
+                currentTab.style.display = 'none';
+            }
+            document.querySelector('.return-button').style.display = 'none';
+        }
+
+        function toggleTab(tabName) {
+            if (currentTab !== null) {
+                currentTab.style.display = 'none';
+            }
+            let tabContent = document.getElementById(tabName);
+            tabContent.style.display = 'block';
+            currentTab = tabContent;
+            if (tabName === 'return') {
+                document.querySelector('.return-button').style.display = 'block';
+            } else {
+                document.querySelector('.return-button').style.display = 'none';
+            }
+        }
+
+        function hideTabs() {
+            tabsContainer.classList.remove('active');
+            document.querySelector('.return-button').style.display = 'none';
+            document.querySelector('.start-button').style.display = 'block';
+            if (currentTab !== null) {
+                currentTab.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
